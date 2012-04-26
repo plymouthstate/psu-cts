@@ -346,6 +346,7 @@ class reserveDatabaseAPI{
 			$delivery_type, 
 			$requested_items, 
 			$status));
+		return PSU::db('cts')->Insert_ID();
 			
 	}//end function insertReservation
 

@@ -1,11 +1,11 @@
 {box title="History"}
-<h2>These are loans that you have previously completed.</h2>
-<h5>&nbsp;&nbsp;&nbsp;Click the index number in the left column to view the loan.</h5>
+<strong>These are loans that you have previously completed.</strong>
+<p>Click the index number in the left column to view the loan.</p>
 {assign var="fixed_start_date" value=$start_date|date_format:$date_format}
 {assign var="fixed_end_date" value=$end_date|date_format:$date_format}
 <table class="grid">
 	<thead>
-		<th class="header">Index</th>	
+		<th class="header">View Loan</th>	
 		<th class="header">Last Name</th>	
 		<th class="header">First Name</th>	
 		<th class="header">Start Date</th>	
@@ -19,7 +19,7 @@
 	<tbody>
 	{foreach from=$reservations item=reserve key=id}
 		<tr>
-			<td><a href="{$PHP.BASE_URL}/history/search/id/{$id}">{$id}</a></td>
+			<td><a class="btn" href="{$PHP.BASE_URL}/history/search/id/{$id}">View Loan</a></td>
 			<td>{$reserve.lname}</td>		
 			<td>{$reserve.fname}</td>
 			<td>{$reserve.start_date|date_format:$date_format}</td>		

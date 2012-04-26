@@ -1,14 +1,4 @@
 <?php
-//This file will route all of the traffic for the user side of the reservation system.
-//
-//reserve/event
-//reseve/equipment
-//reserve/confirm
-//reserve/success
-require_once $GLOBALS['BASE_DIR'] . '/includes/CTSemailAPI.class.php';
-require_once $GLOBALS['BASE_DIR'] . '/includes/reserveDatabaseAPI.class.php';
-require_once $GLOBALS['BASE_DIR'] . '/includes/CTSdatabaseAPI.class.php';
-
 respond( '/', function( $request, $response, $app){
 	$app->tpl->assign( 'hours' , array(1=>1,2=>2,3=>3,4=>4,5=>5,6=>6,7=>7,8=>8,9=>9,10=>10,11=>11,12=>12));
 	$app->tpl->assign( 'minutes', array(00=>0,05=>5,10=>10,15=>15,20=>20,25=>25,30=>30,35=>35,40=>40,45=>45,50=>50,55=>55));
@@ -89,7 +79,7 @@ respond ( '/equipment', function( $request, $response, $app){
 });//end equipment
 
 respond( '/equipment/add', function ($request, $response, $app){
-	$equipment_id=$request->equipment_id;
+	$equipment_id=(int)$request->equipment_id;
 	if($equipment_id || $equipment_id =="0" ){
 		$_SESSION['cts']['equipment'][]=$equipment_id;
 	}
@@ -101,7 +91,7 @@ respond( '/equipment/add', function ($request, $response, $app){
 });//end equipment add
 
 respond( '/equipment/[i:id]/remove', function ($request, $response, $app){
-	$equipment_id=$request->id;
+	$equipment_id=(int)$request->id;
 	if($equipment_id || $equipment_id =="0" ){
 		unset($_SESSION['cts']['equipment'][$equipment_id]);
 	}
@@ -234,7 +224,11 @@ respond ('/new', function($request, $response, $app){
 });//end new reservation
 
 respond ('POST','/success', function($request, $response, $app){
-	if(count($_SESSION['cts']['equipment'])>0){
+	if(count($_SESSION['cts']['equipment'])<=0){
+	
+		$_SESSION['errors'][]="Please select at least one item from the list of equipment.";
+		$response->redirect($GLOBALS['BASE_URL'] . '/reserve/equipment');
+	}
 		$currtime=date('Y-n-j G:i:s');
 		$categories=reserveDatabaseAPI::categories();
 
@@ -251,7 +245,7 @@ respond ('POST','/success', function($request, $response, $app){
 			$name=$categories[$i]; 
 			$equipment .= $name . ", ";
 		}
-		reserveDatabaseAPI::insertReservation(
+		$insert_id=reserveDatabaseAPI::insertReservation(
 			$_SESSION['wp_id'],
 			$_SESSION['cts']['last_name'],
 			$_SESSION['cts']['first_name'],
@@ -270,13 +264,9 @@ respond ('POST','/success', function($request, $response, $app){
 			$equipment,
 			"pending"
 		);
-		$insert_id=mysql_insert_id();
+		//$insert_id=mysql_insert_id();
 		CTSemailAPI::emailUser($_SESSION['cts']);
 		CTSemailAPI::emailCTS($_SESSION['cts'],$insert_id);	
 		unset($_SESSION['cts']);//delete the cts session array
 		$app->tpl->display( 'success.tpl' );
-	}else{
-		$_SESSION['errors'][]="Please select at least one item from the list of equipment.";
-		$response->redirect($GLOBALS['BASE_URL'] . '/reserve/equipment');
-	}
 });//end success

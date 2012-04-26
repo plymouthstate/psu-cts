@@ -1,6 +1,7 @@
 <?php
 
 require_once 'autoload.php';
+
 PSU::session_start(); // force ssl + start a session
 
 $GLOBALS['BASE_URL'] = '/webapp/cts-new';
@@ -10,7 +11,9 @@ $GLOBALS['TITLE'] = 'Classroom Technology Services Toolkit';
 $GLOBALS['TEMPLATES'] = $GLOBALS['BASE_DIR'] . '/templates';
 
 require_once $GLOBALS['BASE_DIR'] . '/includes/CTSAPI.class.php';
-
+require_once $GLOBALS['BASE_DIR'] . '/includes/CTSemailAPI.class.php';
+require_once $GLOBALS['BASE_DIR'] . '/includes/reserveDatabaseAPI.class.php';
+require_once $GLOBALS['BASE_DIR'] . '/includes/CTSdatabaseAPI.class.php';
 require_once 'klein/klein.php';
 
 if( file_exists( $GLOBALS['BASE_DIR'] . '/debug.php' ) ) {
