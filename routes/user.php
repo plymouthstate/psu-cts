@@ -2,7 +2,7 @@
 
 respond ('/', function( $request, $response, $app){
 $app->tpl->assign('step', $_SESSION['cts']['step']);
-$app->tpl->display( 'usercp.tpl' );
+$app->tpl->display( 'user-home.tpl' );
 
 });
 

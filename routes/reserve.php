@@ -265,8 +265,8 @@ respond ('POST','/success', function($request, $response, $app){
 			"pending"
 		);
 		//$insert_id=mysql_insert_id();
-		CTSemailAPI::emailUser($_SESSION['cts']);
+		CTSemailAPI::Email_User($_SESSION['cts']);
 		CTSemailAPI::emailCTS($_SESSION['cts'],$insert_id);	
-		unset($_SESSION['cts']);//delete the cts session array
-		$app->tpl->display( 'success.tpl' );
+		//unset($_SESSION['cts']);//delete the cts session array
+		//$app->tpl->display( 'success.tpl' );
 });//end success
