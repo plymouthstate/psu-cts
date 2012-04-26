@@ -254,7 +254,19 @@ respond('/reservation/id/[i:id]/dropoff', function( $request, $response, $app){
 	$response->redirect($GLOBALS['BASE_URL'] . '/admin/reservation/search/id/'.$reservation_idx);	
 });//chnage status
 
+respond('/reservation/id/[i:id]/userpickup', function( $request, $response, $app){
+	$reservation_idx=$request->id;
+	$user=$request->param('add_user_pickup');
+	//needs to insert the userid into the database
+	$response->redirect($GLOBALS['BASE_URL'] . '/admin/reservation/search/id/'.$reservation_idx);	
+});//chnage status
 
+respond('/reservation/id/[i:id]/userdropoff', function( $request, $response, $app){
+	$reservation_idx=$request->id;
+	$user=$request->param('add_user_pickup');
+	//needs to insert the user id into the database
+	$response->redirect($GLOBALS['BASE_URL'] . '/admin/reservation/search/id/'.$reservation_idx);	
+});//chnage status
 
 respond('/reservation/id/[i:id]/priority', function( $request, $response, $app){
 	$reservation_idx=$request->id;
