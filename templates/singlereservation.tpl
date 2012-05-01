@@ -111,9 +111,17 @@ $(function(){
 			<li><strong>Title: </strong>{$reserve.title}</li>
 			<li><strong>Application date: </strong>{$reserve.application_date|date_format:$date_format} <strong> at </strong> {$reserve.application_date|date_format:$time_format}</li>
 
-			<form class="label-left" action="{$PHP.BASE_URL}/admin/reservation/id/{$reservation_idx}/status"<li><strong>&nbsp;&nbsp;&nbsp;Status of Loan: </strong>{html_options name="status" options=$status selected=$reserve.status} <input type="submit" name="Status" value="Change Status"></form></li>
+			<li><form class="label-left" action="{$PHP.BASE_URL}/admin/reservation/id/{$reservation_idx}/status"><strong>&nbsp;&nbsp;&nbsp;Status of Loan: </strong>{html_options name="status" options=$status selected=$reserve.status} <input type="submit" name="Status" value="Change Status"></form></li>
 
-	<form class="label-left" action="{$PHP.BASE_URL}/admin/reservation/id/{$reservation_idx}/priority"<li><strong>&nbsp;&nbsp;&nbsp;Priority of Loan: </strong>{html_options name="priority" options=$priority selected=$reserve.priority} <input type="submit" name="Priority" value="Change Priority"></form></li>
+			<li><form class="label-left" action="{$PHP.BASE_URL}/admin/reservation/id/{$reservation_idx}/userpickup" method="POST">
+			<strong>Add Pickup User:</strong><input type="text" name="USER_ID"><input type="submit" name="add_user_pickup" value="Add Pickup User"></li></form>
+
+			<li><form class="label-left" action="{$PHP.BASE_URL}/admin/reservation/id/{$reservation_idx}/userdropoff" method="POST">
+			<strong>Add Pickup User:</strong><input type="text" name="USER_ID"><input type="submit" name="add_user_dropoff" value="Add Dropoff User"></li></form>
+
+
+
+			<li><form class="label-left" action="{$PHP.BASE_URL}/admin/reservation/id/{$reservation_idx}/priority"><strong>&nbsp;&nbsp;&nbsp;Priority of Loan: </strong>{html_options name="priority" options=$priority selected=$reserve.priority} <input type="submit" name="Priority" value="Change Priority"></form></li>
 
 			<li><strong>Comments: </strong><p>{$reserve.memo}</p></li>
 			<li><strong>Requested Items: </strong><p>{$reserve.request_items}</p></li>

@@ -249,12 +249,15 @@ respond('/reservation/id/[i:id]/pickup', function( $request, $response, $app){
 respond('/reservation/id/[i:id]/dropoff', function( $request, $response, $app){
 	$reservation_idx=$request->id;
 	$user=$request->param('assigned_tech_dropoff');
-	PSU::db('cts')->debug=true;
+	//PSU::db('cts')->debug=true;
 	reserveDatabaseAPI::changeDropoff($reservation_idx, $user);
 	$response->redirect($GLOBALS['BASE_URL'] . '/admin/reservation/search/id/'.$reservation_idx);	
 });//chnage status
 
+respond('/gantt', function( $request, $response, $app ){
 
+$app->tpl->display('gantt.tpl');
+});
 
 respond('/reservation/id/[i:id]/priority', function( $request, $response, $app){
 	$reservation_idx=$request->id;
@@ -269,7 +272,7 @@ respond('/reservation/id/[i:id]/equipment', function( $request, $response, $app)
 	if(strlen($GLPI_ID)!=4 && strlen($GLPI_ID) !=13){
 		$_SESSION['errors'][]="GLPI ID incorrect.";
 	}
-	PSU::dbug($_SESSION['errors']);
+	//PSU::dbug($_SESSION['errors']);
 
 	if(count($_SESSION['errors'])<=0){
 		reserveDatabaseAPI::addEquipment($reservation_idx, $GLPI_ID);
@@ -280,7 +283,7 @@ respond('/reservation/id/[i:id]/equipment', function( $request, $response, $app)
 respond('/reservation/equipment/[i:id]/remove/[:key]', function( $request, $response, $app){
 	$reservation_idx=$request->id;
 	$equipment_reservation_idx=$request->key;
-	PSU::dbug($equipment_reservation_idx);
+	//PSU::dbug($equipment_reservation_idx);
 	reserveDatabaseAPI::removeEquipment($equipment_reservation_idx);	
 	$response->redirect($GLOBALS['BASE_URL'] . '/admin/reservation/search/id/'.$reservation_idx);	
 });//add equipment manually
@@ -312,8 +315,8 @@ respond('/reservation/search/id/[i:id]' , function( $request, $response, $app){
 	$cts_technicians=$population->query();
 	$app->tpl->assign( 'subitemlist', reserveDatabaseAPI::getSubItems());
 	$app->tpl->assign( 'cts_technicians', array("NULL"=>"Select a Technician","p5lydnqia"=>"David Allen", "poasdfe"=>"Todd Kent"));
-	PSU::dbug($population);
-	PSU::dbug($cts_technicians);
+	//PSU::dbug($population);
+	//PSU::dbug($cts_technicians);
 	//$pop = iterator_to_array($population);
 	//PSU::dbug($pop[0]);
 	$app->tpl->assign( 'subitems', reserveDatabaseAPI::getReserveSubItems($reservation_idx));
@@ -378,7 +381,7 @@ respond('/reservation/search/id/[i:id]/[a:action]' , function( $request, $respon
 
 
 		$app->tpl->assign( 'reservation' , $reservation);
-		PSU::dbug(reserveDatabaseAPI::by_id($reservation_idx));
+		//PSU::dbug(reserveDatabaseAPI::by_id($reservation_idx));
 		$app->tpl->display( 'singlereservation.tpl' );
 
 	}//edit
@@ -394,9 +397,10 @@ respond('/reservation/search/id/[i:id]/[a:action]' , function( $request, $respon
 
 
 respond('/reservation/addmessage/[i:id]', function( $request, $response, $app){
-	PSU::dbug($request->message);
+	//PSU::dbug($request->message);
 	$username=$_SESSION['username'];
 	$message=$request->message;
+	$message=filter_var($message, FILTER_SANITIZE_STRING);
 	$reservation_idx=$request->id;
 	reserveDatabaseAPI::addMessage($reservation_idx,$message, $username);
 	$response->redirect($GLOBALS['BASE_URL'].'/admin/reservation/search/id/'.$reservation_idx);

@@ -2,4 +2,9 @@
 <script type="text/javascript" src="{$PHP.BASE_URL}/js/jquery-ui-1.8.17.custom.min.js"></script>
 <script type="text/javascript" src="{$PHP.BASE_URL}/js/ui/jquery.ui.timepicker.js"></script>
 <script type="text/javascript" src="{$PHP.BASE_URL}/js/behavior.js"></script>
+<script type="text/javascript" src="{$PHP.BASE_URL}/js/gantt.js"></script>
+<script type="text/javascript" src="{$PHP.BASE_URL}/js/gantt/jquery.fn.gantt.js"></script>
+<script type="text/javascript" src="{$PHP.BASE_URL}/js/gantt/jquery.fn.gantt.min.js"></script>
+
+
 

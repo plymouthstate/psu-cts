@@ -6,11 +6,11 @@
 
 		<h2>Your/Submitter Contact Information</h2>
 	<ul class="label-left">
-		<li><label class="required">Name:</label>{$reserve.submit_first_name} {$reserve.submit_last_name}</li>
+		<li><strong>Name: </strong>{$reserve.submit_first_name} {$reserve.submit_last_name}</li>
 	</ul>
 		<h2>Event Contact Information</h2>
 	<ul class="label-left">
-		<li><label>Name:</label>{$reserve.first_name} {$reserve.last_name}</li>
+		<li><strong>Name: </strong>{$reserve.first_name} {$reserve.last_name}</li>
 		<li><strong>Phone: </strong>{$reserve.phone}</li>
 	</ul>
 		<h2>Event Information</h2>
