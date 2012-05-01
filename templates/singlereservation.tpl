@@ -113,11 +113,19 @@ $(function(){
 
 			<li><form class="label-left" action="{$PHP.BASE_URL}/admin/reservation/id/{$reservation_idx}/status"><strong>&nbsp;&nbsp;&nbsp;Status of Loan: </strong>{html_options name="status" options=$status selected=$reserve.status} <input type="submit" name="Status" value="Change Status"></form></li>
 
+			{if $reserve.user_pickup == "000000000"}
 			<li><form class="label-left" action="{$PHP.BASE_URL}/admin/reservation/id/{$reservation_idx}/userpickup" method="POST">
 			<strong>Add Pickup User:</strong><input type="text" name="USER_ID"><input type="submit" name="add_user_pickup" value="Add Pickup User"></li></form>
+			{else}
+			<li><strong>Pickup User: </strong>{$reserve.user_pickup}</li>
+			{/if}
 
+			{if $reserve.user_dropoff == "000000000"}
 			<li><form class="label-left" action="{$PHP.BASE_URL}/admin/reservation/id/{$reservation_idx}/userdropoff" method="POST">
 			<strong>Add Pickup User:</strong><input type="text" name="USER_ID"><input type="submit" name="add_user_dropoff" value="Add Dropoff User"></li></form>
+			{else}
+			<li><strong>Dropoff User: </strong>{$reserve.user_dropoff}</li>
+			{/if}
 
 
 

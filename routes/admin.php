@@ -115,6 +115,27 @@ respond('/reservation' , function( $request, $response, $app){
 
 });//end reservation
 
+respond('/reservation/id/[i:id]/userpickup', function( $request, $response, $app ){
+
+	$reservation_idx=$request->id;
+	$user_id=$request->USER_ID;
+	reserveDatabaseAPI::addUserPickup($reservation_idx,$user_id);
+	$response->redirect( $GLOBALS['BASE_URL'] . '/admin/reservation/search/id/' . $reservation_idx);
+
+
+});
+
+respond('/reservation/id/[i:id]/userdropoff', function( $request, $response, $app ){
+
+	$reservation_idx=$request->id;
+	$user_id=$request->USER_ID;
+	reserveDatabaseAPI::addUserDropoff($reservation_idx,$user_id);
+	$response->redirect( $GLOBALS['BASE_URL'] . '/admin/reservation/search/id/' . $reservation_idx);
+
+
+});
+
+
 respond('/reservation/[i:id]/edit',function( $request, $response, $app){
 	//required parameters
 	$reservation_idx=$request->id;

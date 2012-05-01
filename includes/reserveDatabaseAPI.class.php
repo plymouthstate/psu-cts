@@ -10,6 +10,22 @@ class reserveDatabaseAPI{
 
 	}//function addMessage
 
+	function addUserPickup($reservation_idx, $user_id){
+		$sql="UPDATE cts_reservation SET user_pickup = ? WHERE reservation_idx = ?";
+		$data=array($user_id,$reservation_idx);
+		PSU::db('cts')->Execute($sql,$data);
+
+	}
+
+	function addUserDropoff($reservation_idx, $user_id){
+		$sql="UPDATE cts_reservation SET user_dropoff = ? WHERE reservation_idx = ?";
+		$data=array($user_id,$reservation_idx);
+		PSU::db('cts')->Execute($sql,$data);
+
+
+	}
+
+
 	function removeEquipment($reservation_idx){
 
 		$sql="DELETE FROM  cts_reservation_equipment WHERE reservation_equipment_idx = ?";
