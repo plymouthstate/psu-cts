@@ -106,7 +106,9 @@ respond('/mypage', function( $request, $response, $app){
 
 
 respond('/reservation' , function( $request, $response, $app){
-	$app->tpl->assign( 'locations' , reserveDatabaseAPI::locations());
+	$locations[0]="Please select a location";
+	$locations+= reserveDatabaseAPI::locations();
+	$app->tpl->assign( 'locations' , $locations);
 	$start_date=date('Y-m-d');
 
 	$app->tpl->assign( 'reservation' , reserveDatabaseAPI::by_date($start_date));
@@ -114,6 +116,13 @@ respond('/reservation' , function( $request, $response, $app){
 	$app->tpl->display( 'reservation.tpl' );
 
 });//end reservation
+
+respond('/reservation/search' , function( $request, $response, $app){
+
+
+
+});//end reservation/search
+
 
 respond('/reservation/[i:id]/edit',function( $request, $response, $app){
 	//required parameters
@@ -256,15 +265,15 @@ respond('/reservation/id/[i:id]/dropoff', function( $request, $response, $app){
 
 respond('/reservation/id/[i:id]/userpickup', function( $request, $response, $app){
 	$reservation_idx=$request->id;
-	$user=$request->param('add_user_pickup');
-	//needs to insert the userid into the database
+	$user=$request->param('USER_ID');
+	reserveDatabaseAPI::addUserPickup($reservation_idx,$user);
 	$response->redirect($GLOBALS['BASE_URL'] . '/admin/reservation/search/id/'.$reservation_idx);	
 });//chnage status
 
 respond('/reservation/id/[i:id]/userdropoff', function( $request, $response, $app){
 	$reservation_idx=$request->id;
-	$user=$request->param('add_user_pickup');
-	//needs to insert the user id into the database
+	$user=$request->param('USER_ID');
+	reserveDatabaseAPI::addUserDropoff($reservation_idx,$user);
 	$response->redirect($GLOBALS['BASE_URL'] . '/admin/reservation/search/id/'.$reservation_idx);	
 });//chnage status
 
@@ -324,8 +333,8 @@ respond('/reservation/search/id/[i:id]' , function( $request, $response, $app){
 	$cts_technicians=$population->query();
 	$app->tpl->assign( 'subitemlist', reserveDatabaseAPI::getSubItems());
 	$app->tpl->assign( 'cts_technicians', array("NULL"=>"Select a Technician","p5lydnqia"=>"David Allen", "poasdfe"=>"Todd Kent"));
-	PSU::dbug($population);
-	PSU::dbug($cts_technicians);
+	//PSU::dbug($population);
+	//PSU::dbug($cts_technicians);
 	//$pop = iterator_to_array($population);
 	//PSU::dbug($pop[0]);
 	$app->tpl->assign( 'subitems', reserveDatabaseAPI::getReserveSubItems($reservation_idx));
@@ -390,7 +399,7 @@ respond('/reservation/search/id/[i:id]/[a:action]' , function( $request, $respon
 
 
 		$app->tpl->assign( 'reservation' , $reservation);
-		PSU::dbug(reserveDatabaseAPI::by_id($reservation_idx));
+		//PSU::dbug(reserveDatabaseAPI::by_id($reservation_idx));
 		$app->tpl->display( 'singlereservation.tpl' );
 
 	}//edit
@@ -417,7 +426,9 @@ respond('/reservation/addmessage/[i:id]', function( $request, $response, $app){
 });//add message to reservation
 
 respond('/reservation/search/[a:action]' , function( $request, $response, $app){
-	$app->tpl->assign( 'locations' , reserveDatabaseAPI::locations());
+	$locations[0]="Please select a location";
+	$locations+= reserveDatabaseAPI::locations();
+	$app->tpl->assign('locations',$locations);
 	define('ONE_DAY', 60*60*24);//defining what one day is
 	$week=date('w');//define the current week
 	if($request->action=="nextweek"){

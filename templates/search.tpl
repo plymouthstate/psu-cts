@@ -1,6 +1,11 @@
 <script>
+var startTime=new Date();
 	$(function(){
 		$( "#fromdate, #todate" ).datepicker();
+		$( "#fromdate" ).change(function (){
+		var startTime = ($("#fromdate").val());
+			$("#todate").datepicker('option','minDate',startTime);
+			});
 	});
 </script>
 {box title="Search"}
